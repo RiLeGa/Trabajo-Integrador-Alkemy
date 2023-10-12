@@ -1,9 +1,12 @@
-﻿namespace TechOil.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TechOil.Models
 {
-    public class Trabajos
+    public class Trabajo
     {
+        [Key]
         public int CodTrabajo { get; set; }
-        public DateOnly Fecha { get; set; }
+        public DateTime Fecha { get; set; }
         public int CodProyecto { get; set; }
         public int CodServicio { get; set; }
         public int ContHoras { get; set; }

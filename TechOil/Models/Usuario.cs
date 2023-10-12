@@ -1,7 +1,10 @@
-﻿namespace TechOil.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TechOil.Models
 {
-    public class Usuarios
+    public class Usuario
     {
+        [Key]
         public int CodUsuario { get; set; }
         public string Nombre { get; set; }
         public int Dni { get; set; }

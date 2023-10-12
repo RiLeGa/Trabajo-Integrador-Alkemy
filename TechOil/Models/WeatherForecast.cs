@@ -1,4 +1,4 @@
-namespace TechOil
+namespace TechOil.Models
 {
     public class WeatherForecast
     {
