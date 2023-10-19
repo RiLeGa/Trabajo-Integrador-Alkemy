@@ -1,83 +1,76 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TechOil.Models;
+using TechOil.Services;
 
 namespace TechOil.Controllers
 {
-    public class UsuariosController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UsuariosController : ControllerBase
     {
-        // GET: UsuariosController
-        public ActionResult Index()
+        private readonly IUsuarioRepository _usuarioRepository;
+        public UsuariosController(IUsuarioRepository usuarioRepository)
         {
-            return View();
+            _usuarioRepository = usuarioRepository;
         }
 
-        // GET: UsuariosController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public IActionResult Get()
         {
-            return View();
+            var usuarios = _usuarioRepository.GetAllUsuarios();
+            if (usuarios?.Count() == 0)
+            {
+                return NotFound("No se encontraron Usuarios");
+            }
+            else
+            {
+                return Ok(usuarios);
+            }
         }
-
-        // GET: UsuariosController/Create
-        public ActionResult Create()
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
         {
-            return View();
+            var usuario = _usuarioRepository.GetUsuarioById(id);
+            if (usuario == null)
+            {
+                return NotFound("No se encontro el Usuario solicitado");
+            }
+            else
+            {
+                return Ok(usuario);
+            }
         }
-
-        // POST: UsuariosController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Post([FromBody] Usuario usuario)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _usuarioRepository.AddUsuario(usuario);
+            return CreatedAtAction(nameof(Get), new { id = usuario.CodUsuario }, usuario);
         }
-
-        // GET: UsuariosController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] Usuario updateUsuario)
         {
-            return View();
+            var usuario = _usuarioRepository.GetUsuarioById(id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            usuario.Nombre= updateUsuario.Nombre;
+            usuario.Dni= updateUsuario.Dni;
+            usuario.Tipo= updateUsuario.Tipo;
+            _usuarioRepository.UpdateUsuario(usuario);
+            return Ok(usuario);
         }
-
-        // POST: UsuariosController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            try
+            var usuario = _usuarioRepository.GetUsuarioById(id);
+            if (usuario == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: UsuariosController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: UsuariosController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _usuarioRepository.DeleteUsuario(id);
+            return Ok("Usuario eliminado satisfactoriamente");
         }
     }
 }

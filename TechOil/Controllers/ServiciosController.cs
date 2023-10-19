@@ -1,83 +1,77 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TechOil.Models;
+using TechOil.Repositorys;
+using TechOil.Services;
 
 namespace TechOil.Controllers
 {
-    public class ServiciosController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ServiciosController : ControllerBase
     {
-        // GET: ServiciosController
-        public ActionResult Index()
+        private readonly IServicioRepository _servicioRepository;
+        public ServiciosController(IServicioRepository servicioRepository)
         {
-            return View();
+            _servicioRepository = servicioRepository;
         }
 
-        // GET: ServiciosController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public IActionResult Get()
         {
-            return View();
+            var servicios = _servicioRepository.GetAllServicios();
+            if (servicios?.Count() == 0)
+            {
+                return NotFound("No se encontraron Servicios");
+            }
+            else
+            {
+                return Ok(servicios);
+            }
         }
-
-        // GET: ServiciosController/Create
-        public ActionResult Create()
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
         {
-            return View();
+            var servicio = _servicioRepository.GetServicioById(id);
+            if (servicio == null)
+            {
+                return NotFound("No se encontro el servicio solicitado");
+            }
+            else
+            {
+                return Ok(servicio);
+            }
         }
-
-        // POST: ServiciosController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Post([FromBody] Servicio servicio)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _servicioRepository.AddServicio(servicio);
+            return CreatedAtAction(nameof(Get), new { id = servicio.CodServicio }, servicio);
         }
-
-        // GET: ServiciosController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] Servicio updateServicio)
         {
-            return View();
+            var servicio = _servicioRepository.GetServicioById(id);
+            if (servicio == null)
+            {
+                return NotFound();
+            }
+            servicio.Descr = updateServicio.Descr;
+            servicio.ValorHora = updateServicio.ValorHora;
+            servicio.Estado= updateServicio.Estado;
+            _servicioRepository.UpdateServicio(servicio);
+            return Ok(servicio);
         }
-
-        // POST: ServiciosController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            try
+            var servicio = _servicioRepository.GetServicioById(id);
+            if (servicio == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ServiciosController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ServiciosController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _servicioRepository.DeleteServicio(id);
+            return Ok("Servicio eliminado satisfactoriamente");
         }
     }
 }

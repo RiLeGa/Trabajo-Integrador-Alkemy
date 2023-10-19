@@ -1,83 +1,73 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TechOil.Models;
+using TechOil.Services;
 
 namespace TechOil.Controllers
 {
-    public class TrabajosController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class TrabajosController : ControllerBase
     {
-        // GET: TrabajosController
-        public ActionResult Index()
+        private readonly ITrabajoRepository _trabajoRepository;
+        public TrabajosController(ITrabajoRepository trabajoRepository)
         {
-            return View();
+            _trabajoRepository = trabajoRepository;
         }
 
-        // GET: TrabajosController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public IActionResult Get()
         {
-            return View();
+            var trabajos = _trabajoRepository.GetAllTrabajos();
+            if (trabajos?.Count() == 0)
+            {
+                return NotFound("No se encontraron Trabajos");
+            }
+            else
+            {
+                return Ok(trabajos);
+            }
         }
-
-        // GET: TrabajosController/Create
-        public ActionResult Create()
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
         {
-            return View();
+            var trabajo = _trabajoRepository.GetTrabajoById(id);
+            if (trabajo == null)
+            {
+                return NotFound("No se encontro el Trabajo solicitado");
+            }
+            else
+            {
+                return Ok(trabajo);
+            }
         }
-
-        // POST: TrabajosController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Post([FromBody] Trabajo trabajo)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _trabajoRepository.AddTrabajo(trabajo);
+            return CreatedAtAction(nameof(Get), new { id = trabajo.CodTrabajo }, trabajo);
         }
-
-        // GET: TrabajosController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] Trabajo updateTrabajo)
         {
-            return View();
+            var trabajo = _trabajoRepository.GetTrabajoById(id);
+            if (trabajo == null)
+            {
+                return NotFound();
+            }
+            _trabajoRepository.UpdateTrabajo(trabajo);
+            return Ok(trabajo);
         }
-
-        // POST: TrabajosController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            try
+            var trabajo = _trabajoRepository.GetTrabajoById(id);
+            if (trabajo == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: TrabajosController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: TrabajosController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _trabajoRepository.DeleteTrabajo(id);
+            return Ok("Trabajo eliminado satisfactoriamente");
         }
     }
 }
