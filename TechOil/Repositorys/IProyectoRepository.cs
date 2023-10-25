@@ -1,5 +1,5 @@
 ﻿using TechOil.Models;
-namespace TechOil.Services
+namespace TechOil.Repositorys
 {
     public interface IProyectoRepository
     {

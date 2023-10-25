@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TechOil.Models;
-using TechOil.Services;
+using TechOil.Repositorys;
 
 namespace TechOil.Controllers
 {

@@ -30,7 +30,7 @@ namespace TechOil.Migrations
                 name: "Servicios",
                 columns: table => new
                 {
-                    CodServicios = table.Column<int>(type: "int", nullable: false)
+                    CodServicio = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Descr = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Estado = table.Column<bool>(type: "bit", nullable: false),
@@ -38,7 +38,7 @@ namespace TechOil.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Servicios", x => x.CodServicios);
+                    table.PrimaryKey("PK_Servicios", x => x.CodServicio);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,7 +68,7 @@ namespace TechOil.Migrations
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Dni = table.Column<int>(type: "int", nullable: false),
                     Tipo = table.Column<int>(type: "int", nullable: false),
-                    Contraseña = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TechOil.Models;
+using TechOil.Models.Dtos;
+using TechOil.Repositorys;
 using TechOil.Services;
 
 namespace TechOil.Controllers
@@ -9,29 +13,35 @@ namespace TechOil.Controllers
     [Route("api/[controller]")]
     public class UsuariosController : ControllerBase
     {
-        private readonly IUsuarioRepository _usuarioRepository;
-        public UsuariosController(IUsuarioRepository usuarioRepository)
+        private readonly IUsuariosService _usuarioService;
+        public readonly IMapper _mapper;
+        public UsuariosController(IUsuariosService usuariosService, IMapper mapper)
         {
-            _usuarioRepository = usuarioRepository;
+            _usuarioService = usuariosService;
+            _mapper = mapper;
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Get()
         {
-            var usuarios = _usuarioRepository.GetAllUsuarios();
+            var usuarios = _usuarioService.GetAll();
             if (usuarios?.Count() == 0)
             {
-                return NotFound("No se encontraron Usuarios");
+                return NotFound("No se encontraron usuarios");
             }
             else
             {
-                return Ok(usuarios);
+                //return Ok(usuarios);
+                var usuariosDTOs = _mapper.Map<List<UsuariosDto>>(usuarios);
+                return Ok(usuariosDTOs);
             }
         }
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult Get(int id)
         {
-            var usuario = _usuarioRepository.GetUsuarioById(id);
+            var usuario = _usuarioService.GetById(id);
             if (usuario == null)
             {
                 return NotFound("No se encontro el Usuario solicitado");
@@ -42,15 +52,17 @@ namespace TechOil.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
         public IActionResult Post([FromBody] Usuario usuario)
         {
-            _usuarioRepository.AddUsuario(usuario);
+            _usuarioService.Add(usuario);
             return CreatedAtAction(nameof(Get), new { id = usuario.CodUsuario }, usuario);
         }
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult Put(int id, [FromBody] Usuario updateUsuario)
         {
-            var usuario = _usuarioRepository.GetUsuarioById(id);
+            var usuario = _usuarioService.GetById(id);
             if (usuario == null)
             {
                 return NotFound();
@@ -58,18 +70,19 @@ namespace TechOil.Controllers
             usuario.Nombre= updateUsuario.Nombre;
             usuario.Dni= updateUsuario.Dni;
             usuario.Tipo= updateUsuario.Tipo;
-            _usuarioRepository.UpdateUsuario(usuario);
+            _usuarioService.Update(usuario);
             return Ok(usuario);
         }
         [HttpDelete("{id}")]
+        [Authorize]
         public IActionResult Delete(int id)
         {
-            var usuario = _usuarioRepository.GetUsuarioById(id);
+            var usuario = _usuarioService.GetById(id);
             if (usuario == null)
             {
                 return NotFound();
             }
-            _usuarioRepository.DeleteUsuario(id);
+            _usuarioService.Delete(id);
             return Ok("Usuario eliminado satisfactoriamente");
         }
     }

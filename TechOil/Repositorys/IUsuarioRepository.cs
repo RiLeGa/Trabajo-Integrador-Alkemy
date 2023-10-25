@@ -1,5 +1,5 @@
 ﻿using TechOil.Models;
-namespace TechOil.Services
+namespace TechOil.Repositorys
 {
     public interface IUsuarioRepository
     {
@@ -8,5 +8,7 @@ namespace TechOil.Services
         void AddUsuario(Usuario usuario);
         void UpdateUsuario(Usuario usuario);
         void DeleteUsuario(int id);
+
+        public Usuario GetUserByUsername(string username);
     }
 }

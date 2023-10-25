@@ -1,9 +1,10 @@
-﻿using TechOil.DataAccess;
+﻿using Microsoft.EntityFrameworkCore;
+using TechOil.DataAccess;
 using TechOil.Models;
 
 namespace TechOil.Repositorys
 {
-    public class UsuarioRepository
+    public class UsuarioRepository : IUsuarioRepository
     {
         public readonly TechOilDbContext _dbContext;
 
@@ -22,6 +23,12 @@ namespace TechOil.Repositorys
         }
         public void AddUsuario(Usuario usuario)
         {
+            string salt = BCrypt.Net.BCrypt.GenerateSalt(12);
+
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(usuario.Password, salt);
+
+            usuario.Password = hashedPassword;
+
             _dbContext.Usuarios.Add(usuario);
             _dbContext.SaveChanges();
         }
@@ -38,6 +45,10 @@ namespace TechOil.Repositorys
                 _dbContext.Usuarios.Remove(usuario);
                 _dbContext.SaveChanges();
             }
+        }
+        public Usuario GetUserByUsername(string username)
+        {
+            return _dbContext.Usuarios.FirstOrDefault(u => u.Nombre == username);
         }
     }
 }

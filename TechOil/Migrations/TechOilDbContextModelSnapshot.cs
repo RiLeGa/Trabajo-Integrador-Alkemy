@@ -48,11 +48,11 @@ namespace TechOil.Migrations
 
             modelBuilder.Entity("TechOil.Models.Servicio", b =>
                 {
-                    b.Property<int>("CodServicios")
+                    b.Property<int>("CodServicio")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodServicios"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodServicio"));
 
                     b.Property<string>("Descr")
                         .IsRequired()
@@ -64,7 +64,7 @@ namespace TechOil.Migrations
                     b.Property<decimal>("ValorHora")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("CodServicios");
+                    b.HasKey("CodServicio");
 
                     b.ToTable("Servicios");
                 });
@@ -108,14 +108,14 @@ namespace TechOil.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodUsuario"));
 
-                    b.Property<string>("Contraseña")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Dni")
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

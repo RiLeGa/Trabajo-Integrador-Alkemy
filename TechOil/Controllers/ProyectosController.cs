@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Net.WebSockets;
 using TechOil.Models;
+using TechOil.Models.Dtos;
+using TechOil.Repositorys;
 using TechOil.Services;
 
 namespace TechOil.Controllers
@@ -10,29 +15,35 @@ namespace TechOil.Controllers
     [Route("api/[controller]")]
     public class ProyectosController : ControllerBase
     {
-        private readonly IProyectoRepository _proyectoRepository;
-        public ProyectosController(IProyectoRepository proyectoRepository)
+        private readonly IProyectosService _proyectoService;
+        public readonly IMapper _mapper;
+        public ProyectosController(IProyectosService proyectoService, IMapper mapper)
         {
-            _proyectoRepository = proyectoRepository;
+            _proyectoService = proyectoService;
+            _mapper = mapper;
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Get()
         {
-            var proyectos = _proyectoRepository.GetAllProyectos();
+            var proyectos = _proyectoService.GetAll();
             if (proyectos?.Count() == 0)
             {
-                return NotFound("No se encontraron Servicios");
+                return NotFound("No se encontraron Proyectos");
             }
             else
             {
-                return Ok(proyectos);
+                //return Ok(proyectos);
+                var proyectosDTOs = _mapper.Map<List<ProyectosDto>>(proyectos);
+                return Ok(proyectosDTOs); 
             }
         }
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult Get(int id)
         {
-            var proyecto = _proyectoRepository.GetProyectoById(id);
+            var proyecto = _proyectoService.GetById(id);
             if (proyecto == null)
             {
                 return NotFound("No se encontro el proyecto solicitado");
@@ -43,15 +54,17 @@ namespace TechOil.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
         public IActionResult Post([FromBody]Proyecto proyecto) 
         {
-            _proyectoRepository.AddProyecto(proyecto);
+            _proyectoService.Add(proyecto);
             return CreatedAtAction(nameof(Get), new {id = proyecto.CodProyecto}, proyecto);
         }
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult Put(int id, [FromBody]Proyecto updateProyecto) 
         {
-            var proyecto = _proyectoRepository.GetProyectoById(id);
+            var proyecto = _proyectoService.GetById(id);
             if (proyecto == null)
             {
                 return NotFound();
@@ -59,18 +72,19 @@ namespace TechOil.Controllers
             proyecto.Nombre = updateProyecto.Nombre;
             proyecto.Direccion = updateProyecto.Direccion;
             proyecto.Estado = updateProyecto.Estado;
-            _proyectoRepository.UpdateProyecto(proyecto);
+            _proyectoService.Update(proyecto);
             return Ok(proyecto);
         }
         [HttpDelete("{id}")]
+        [Authorize]
         public IActionResult Delete(int id) 
         {
-            var proyecto = _proyectoRepository.GetProyectoById(id);
+            var proyecto = _proyectoService.GetById(id);
             if (proyecto == null)
             {
                 return NotFound();
             }
-            _proyectoRepository.DeleteProyecto(id);
+            _proyectoService.Delete(id);
             return Ok("Proyecto eliminado satisfactoriamente");
         }
 
