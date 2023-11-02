@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using TechOil.DataAccess;
 using TechOil.Models;
 
@@ -13,33 +14,33 @@ namespace TechOil.Repositorys
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Proyecto> GetAllProyectos()
+        public async Task<IEnumerable<Proyecto>> GetAllProyectos()
         {
-            return _dbContext.Proyectos.ToList();
+            return  await _dbContext.Proyectos.ToListAsync();
         }
-        public Proyecto GetProyectoById(int id)
+        public async Task<Proyecto> GetProyectoById(int id)
         {
-            return _dbContext.Proyectos.FirstOrDefault(p => p.CodProyecto == id);
+            return await _dbContext.Proyectos.FirstOrDefaultAsync(p => p.CodProyecto == id);
         }
-        public void AddProyecto(Proyecto proyecto) 
+        public async Task AddProyecto(Proyecto proyecto) 
         {
             _dbContext.Proyectos.Add(proyecto);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         } 
-        public void UpdateProyecto(Proyecto proyecto) 
+        public async Task UpdateProyecto(Proyecto proyecto) 
         {
             _dbContext.Proyectos.Update(proyecto);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public void DeleteProyecto(int id) 
+        public async Task DeleteProyecto(int id)
         {
-            var proyecto = _dbContext.Proyectos.FirstOrDefault(p => p.CodProyecto == id);
-            if (proyecto != null) 
+            var proyecto = await _dbContext.Proyectos.FirstOrDefaultAsync(p => p.CodProyecto == id);
+            if (proyecto != null)
             {
                 _dbContext.Proyectos.Remove(proyecto);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
+           }
         } 
      
     }
-}

@@ -1,4 +1,5 @@
-﻿using TechOil.DataAccess;
+﻿using Microsoft.EntityFrameworkCore;
+using TechOil.DataAccess;
 using TechOil.Models;
 
 namespace TechOil.Repositorys
@@ -12,31 +13,31 @@ namespace TechOil.Repositorys
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Trabajo> GetAllTrabajos()
+        public async Task<IEnumerable<Trabajo>> GetAllTrabajos()
         {
-            return _dbContext.Trabajos.ToList();
+            return await _dbContext.Trabajos.ToListAsync();
         }
-        public Trabajo GetTrabajoById(int id)
+        public async Task<Trabajo> GetTrabajoById(int id)
         {
-            return _dbContext.Trabajos.FirstOrDefault(p => p.CodTrabajo == id);
+            return await _dbContext.Trabajos.FirstOrDefaultAsync(p => p.CodTrabajo == id);
         }
-        public void AddTrabajo(Trabajo trabajo)
+        public async Task AddTrabajo(Trabajo trabajo)
         {
             _dbContext.Trabajos.Add(trabajo);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public void UpdateTrabajo(Trabajo trabajo)
+        public async Task UpdateTrabajo(Trabajo trabajo)
         {
             _dbContext.Trabajos.Update(trabajo);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public void DeleteTrabajo(int id)
+        public async Task DeleteTrabajo(int id)
         {
             var trabajo = _dbContext.Trabajos.FirstOrDefault(p => p.CodTrabajo == id);
             if (trabajo != null)
             {
                 _dbContext.Trabajos.Remove(trabajo);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
         }
     }

@@ -1,0 +1,176 @@
+﻿* {
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-y: hidden;
+}
+
+.login {
+    background-image: url('../images/tech-oil-logo.jpg');
+    background-position-x:center;
+    background-position-y:center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 105vh;
+    position: relative;
+    width: 100%;
+}
+
+.formLogin {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 25px 0;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 15px;
+    min-width: 350px;
+    max-width: 450px;
+    height: 400px;
+}
+
+.iniciarSesion {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%
+}
+
+.titulo {
+    width: 100%;
+    text-align: center
+}
+
+.videoLogin {
+    display:none
+}
+
+.capa {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+}
+
+@media (min-width: 768px) {
+    .login {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 50vh;
+        position: relative;
+        width: 100%;
+        margin-top: 23vh
+    }
+
+    .formLogin {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 25px 0;
+        align-items: center;
+        border: 1px solid black;
+        border-radius: 15px;
+        min-width: 350px;
+        max-width: 450px;
+        height: 400px;
+    }
+
+    .iniciarSesion {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%
+    }
+
+    .titulo {
+        width: 100%;
+        text-align: center
+    }
+
+    .videoLogin {
+        display: none
+    }
+
+    .capa {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000000;
+        opacity: 0.5;
+        mix-blend-mode: overlay;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    .login {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 50vh;
+        position: relative;
+        width: 100%;
+        margin-top: 23vh
+    }
+
+    .formLogin {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 25px 0;
+        align-items: center;
+        border: 1px solid black;
+        border-radius: 15px;
+        min-width: 350px;
+        max-width: 450px;
+        height: 400px;
+    }
+
+    .iniciarSesion {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%
+    }
+
+    .titulo {
+        width: 100%;
+        text-align: center
+    }
+
+
+    .videoLogin {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover
+    }
+
+    .capa {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000000;
+        opacity: 0.5;
+        mix-blend-mode: overlay;
+    }
+}

@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using TechOil.Models;
+using TechOil.Models.Dtos;
 using TechOil.Repositorys;
 
 namespace TechOil.Controllers
@@ -22,12 +23,13 @@ namespace TechOil.Controllers
             _usuarioRepository = usuarioRepository;
             this.configuration = configuration;
         }
+        
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Auth([FromBody] Usuario usuario)
+        public async Task<IActionResult> Auth([FromBody] UsuarioAuth usuario)
         {
             IActionResult response = Unauthorized();
-            var usuarioEnDb = _usuarioRepository.GetUserByUsername(usuario.Nombre);
+            var usuarioEnDb = await _usuarioRepository.GetUserByUsername(usuario.Nombre);
             if(usuarioEnDb != null) { 
                 if (usuario != null && usuario.Nombre.Equals(usuarioEnDb.Nombre) && usuario.Password.Equals(usuarioEnDb.Password)
                     || usuario.Nombre.Equals("Leandro") && usuario.Password.Equals("Leandro2"))

@@ -22,26 +22,25 @@ namespace TechOil.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        public IActionResult Get()
+        //[Authorize]
+        public async Task<IActionResult> Get()
         {
-            var usuarios = _usuarioService.GetAll();
+            var usuarios = await _usuarioService.GetAll();
             if (usuarios?.Count() == 0)
             {
                 return NotFound("No se encontraron usuarios");
             }
             else
             {
-                //return Ok(usuarios);
-                var usuariosDTOs = _mapper.Map<List<UsuariosDto>>(usuarios);
-                return Ok(usuariosDTOs);
+                //var usuariosDTOs = _mapper.Map<List<UsuariosDto>>(usuarios);
+                return Ok(usuarios);
             }
         }
         [HttpGet("{id}")]
         [Authorize]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var usuario = _usuarioService.GetById(id);
+            var usuario = await _usuarioService.GetById(id);
             if (usuario == null)
             {
                 return NotFound("No se encontro el Usuario solicitado");
@@ -53,16 +52,16 @@ namespace TechOil.Controllers
         }
         [HttpPost]
         [Authorize]
-        public IActionResult Post([FromBody] Usuario usuario)
+        public async Task<IActionResult> Post([FromBody] Usuario usuario)
         {
-            _usuarioService.Add(usuario);
+            await _usuarioService.Add(usuario);
             return CreatedAtAction(nameof(Get), new { id = usuario.CodUsuario }, usuario);
         }
         [HttpPut("{id}")]
         [Authorize]
-        public IActionResult Put(int id, [FromBody] Usuario updateUsuario)
+        public async Task<IActionResult> Put(int id, [FromBody] Usuario updateUsuario)
         {
-            var usuario = _usuarioService.GetById(id);
+            var usuario = await _usuarioService.GetById(id);
             if (usuario == null)
             {
                 return NotFound();
@@ -70,19 +69,19 @@ namespace TechOil.Controllers
             usuario.Nombre= updateUsuario.Nombre;
             usuario.Dni= updateUsuario.Dni;
             usuario.Tipo= updateUsuario.Tipo;
-            _usuarioService.Update(usuario);
+            await _usuarioService.Update(usuario);
             return Ok(usuario);
         }
         [HttpDelete("{id}")]
-        [Authorize]
-        public IActionResult Delete(int id)
+        //[Authorize]
+        public async Task<IActionResult> Delete(int id)
         {
-            var usuario = _usuarioService.GetById(id);
+            var usuario = await _usuarioService.GetById(id);
             if (usuario == null)
             {
                 return NotFound();
             }
-            _usuarioService.Delete(id);
+            await _usuarioService.Delete(id);
             return Ok("Usuario eliminado satisfactoriamente");
         }
     }

@@ -50,7 +50,7 @@ namespace TechOil.Migrations
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CodProyecto = table.Column<int>(type: "int", nullable: false),
                     CodServicio = table.Column<int>(type: "int", nullable: false),
-                    ContHoras = table.Column<int>(type: "int", nullable: false),
+                    CantHoras = table.Column<int>(type: "int", nullable: false),
                     ValorHora = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Costo = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },

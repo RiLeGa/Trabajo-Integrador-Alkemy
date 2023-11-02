@@ -3,48 +3,43 @@ using TechOil.Repositorys;
 
 namespace TechOil.Services
 {
-    public class UsuarioService : IUsuariosService
+    public class ServicioService : IServiciosService
     {
 
-        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IServicioRepository _servicioRepository;
 
-        public UsuarioService(IUsuarioRepository usuarioRepository)
+        public ServicioService(IServicioRepository servicioRepository)
         {
-            _usuarioRepository = usuarioRepository;
+            _servicioRepository = servicioRepository;
         }
 
-        public Usuario GetById(int UsuarioId)
+        public async Task<Servicio> GetById(int servicioId)
         {
-            return _usuarioRepository.GetUsuarioById(UsuarioId);
-        }
-        
-        public Usuario GetByUsername(string username)
-        {
-            return _usuarioRepository.GetUserByUsername(username);
+            return await _servicioRepository.GetServicioById(servicioId);
         }
 
-        public IEnumerable<Usuario> GetAll()
+        public async Task<IEnumerable<Servicio>> GetAll()
         {
-            return _usuarioRepository.GetAllUsuarios();
+            return await _servicioRepository.GetAllServicios();
         }
 
-        public void Add(Usuario Usuario)
+        public async Task Add(Servicio Servicio)
         {
-            _usuarioRepository.AddUsuario(Usuario);
+            await _servicioRepository.AddServicio(Servicio);
         }
 
-        public void Update(Usuario Usuario)
+        public async Task Update(Servicio Servicio)
         {
-            _usuarioRepository.UpdateUsuario(Usuario);
+            await _servicioRepository.UpdateServicio(Servicio);
         }
 
-        public void Delete(int UsuarioId)
+        public async Task Delete(int ServicioId)
         {
-            var Usuario = _usuarioRepository.GetUsuarioById(UsuarioId);
+            var Servicio = await _servicioRepository.GetServicioById(ServicioId);
 
-            if (Usuario != null)
+            if (Servicio != null)
             {
-                _usuarioRepository.DeleteUsuario(UsuarioId);
+                await _servicioRepository.DeleteServicio(ServicioId);
             }
         }
     }

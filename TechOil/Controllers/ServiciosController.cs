@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TechOil.Models;
 using TechOil.Repositorys;
+using TechOil.Services;
 
 namespace TechOil.Controllers
 {
@@ -9,16 +11,17 @@ namespace TechOil.Controllers
     [Route("api/[controller]")]
     public class ServiciosController : ControllerBase
     {
-        private readonly IServicioRepository _servicioRepository;
-        public ServiciosController(IServicioRepository servicioRepository)
+        private readonly IServiciosService _serviciosService;
+        public ServiciosController(IServiciosService serviciosService)
         {
-            _servicioRepository = servicioRepository;
+            _serviciosService = serviciosService;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        //[Authorize]
+        public async Task<IActionResult> Get()
         {
-            var servicios = _servicioRepository.GetAllServicios();
+            var servicios = await _serviciosService.GetAll();
             if (servicios?.Count() == 0)
             {
                 return NotFound("No se encontraron Servicios");
@@ -29,9 +32,10 @@ namespace TechOil.Controllers
             }
         }
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [Authorize]
+        public async Task<IActionResult> Get(int id)
         {
-            var servicio = _servicioRepository.GetServicioById(id);
+            var servicio = await _serviciosService.GetById(id);
             if (servicio == null)
             {
                 return NotFound("No se encontro el servicio solicitado");
@@ -42,15 +46,17 @@ namespace TechOil.Controllers
             }
         }
         [HttpPost]
-        public IActionResult Post([FromBody] Servicio servicio)
+        [Authorize]
+        public async Task<IActionResult> Post([FromBody] Servicio servicio)
         {
-            _servicioRepository.AddServicio(servicio);
+            await _serviciosService.Add(servicio);
             return CreatedAtAction(nameof(Get), new { id = servicio.CodServicio }, servicio);
         }
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Servicio updateServicio)
+        [Authorize]
+        public async Task<IActionResult> Put(int id, [FromBody] Servicio updateServicio)
         {
-            var servicio = _servicioRepository.GetServicioById(id);
+            var servicio = await _serviciosService.GetById(id);
             if (servicio == null)
             {
                 return NotFound();
@@ -58,18 +64,19 @@ namespace TechOil.Controllers
             servicio.Descr = updateServicio.Descr;
             servicio.ValorHora = updateServicio.ValorHora;
             servicio.Estado= updateServicio.Estado;
-            _servicioRepository.UpdateServicio(servicio);
+            await _serviciosService.Update(servicio);
             return Ok(servicio);
         }
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
         {
-            var servicio = _servicioRepository.GetServicioById(id);
+            var servicio = await _serviciosService.GetById(id);
             if (servicio == null)
             {
                 return NotFound();
             }
-            _servicioRepository.DeleteServicio(id);
+            await _serviciosService.Delete(id);
             return Ok("Servicio eliminado satisfactoriamente");
         }
     }

@@ -3,10 +3,10 @@ namespace TechOil.Repositorys
 {
     public interface IProyectoRepository
     {
-        IEnumerable<Proyecto> GetAllProyectos();
-        public  Proyecto GetProyectoById(int id);
-        void AddProyecto(Proyecto proyecto);
-        void UpdateProyecto(Proyecto proyecto);
-        void DeleteProyecto(int id);
+        Task<IEnumerable<Proyecto>> GetAllProyectos();
+        Task<Proyecto> GetProyectoById(int id);
+        Task AddProyecto(Proyecto proyecto);
+        Task UpdateProyecto(Proyecto proyecto);
+        Task DeleteProyecto(int id);
     }
 }

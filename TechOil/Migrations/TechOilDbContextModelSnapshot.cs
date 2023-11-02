@@ -83,7 +83,7 @@ namespace TechOil.Migrations
                     b.Property<int>("CodServicio")
                         .HasColumnType("int");
 
-                    b.Property<int>("ContHoras")
+                    b.Property<int>("CantHoras")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Costo")

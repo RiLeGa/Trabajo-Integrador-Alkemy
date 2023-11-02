@@ -1,0 +1,89 @@
+﻿@page
+@model TechOilF.Pages.ProyectosModel
+@{
+    ViewData["Title"] = "Proyectos";
+    Layout = "_LayoutViewsLogued";
+}
+
+<section class="titAndSerch">
+    <div>
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" id="inputSearch" placeholder="Search" aria-label="Search">
+        <i class="glass bi bi-search"></i>
+    </form>
+</section>
+<section class="listsAndForms">
+    <div class=" formCreate">
+        <form method="post">
+            <h2 class="text-center">Crear Proyecto</h2>
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de proyecto">
+            </div>
+            <div class="mb-3">
+                <label for="direccion" class="form-label">Direccion</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese su direccion">
+            </div>
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <select name="estado" id="estado">
+                    <option value="0">Pendiente</option>
+                    <option value="1">En curso</option>
+                </select>
+            </div>
+            <div class="btn w-100 align-items-center justify-content-between">
+                <button class="btn-success" style="border-radius:5px" asp-page-handler="CrearProyecto" type="submit">Crear Proyecto</button>
+                <button class="btn-danger" style="border-radius:5px" type="reset">Cancelar</button>
+            </div>
+        </form>
+    </div>
+    <div class="dataList">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <table class="table table-bordered table-striped">
+                    <thead class="">
+                        <tr class="">
+                            <th class="text-center">-</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Direccion</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var proyecto in Model.Proyecto)
+                        {
+                            if (proyecto != null)
+                            {
+                                <tr class="listado">
+                                    <th class="text-center">
+                                        @proyecto.CodProyecto
+                                    </th>
+                                    <th class="text-center">
+                                        @proyecto.Nombre
+                                    </th>
+                                    <th class="text-center">
+                                        @proyecto.Direccion
+                                    </th><th class="text-center">
+                                        @proyecto.Estado
+                                    </th>
+                                    <th style="display:flex; flex-direction:row; justify-content:center; align-items:center">
+                                        <div class="buttons" style="display:flex; width:85%; flex-direction:row; justify-content:space-around; align-items:center">
+                                            <button type="submit" class="btn-info"><i class="bi bi-pencil-square"></i>Editar</button>
+                                            <form method="post">
+                                                <button type="submit" class="btn-danger" asp-page-handler="Delete" asp-route-id="@proyecto.CodProyecto"><i class="bi bi-trash-fill"></i>Eliminar</button>
+                                            </form>
+                                        </div>
+                                    </th>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

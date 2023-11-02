@@ -1,4 +1,5 @@
-﻿using TechOil.Models;
+﻿using System.Runtime.CompilerServices;
+using TechOil.Models;
 using TechOil.Repositorys;
 
 namespace TechOil.Services
@@ -13,33 +14,33 @@ namespace TechOil.Services
             _proyectoRepository = proyectoRepository;
         }
 
-        public Proyecto GetById(int proyectoId)
+        public async Task<Proyecto> GetById(int proyectoId)
         {
-            return _proyectoRepository.GetProyectoById(proyectoId);
+            return await _proyectoRepository.GetProyectoById(proyectoId);
         }
 
-        public IEnumerable<Proyecto> GetAll()
+        public async Task<IEnumerable<Proyecto>> GetAll()
         {
-            return _proyectoRepository.GetAllProyectos();
+            return await _proyectoRepository.GetAllProyectos();
         }
 
-        public void Add(Proyecto proyecto)
+        public async Task Add(Proyecto proyecto)
         {
-            _proyectoRepository.AddProyecto(proyecto);
+            await _proyectoRepository.AddProyecto(proyecto);
         }
 
-        public void Update(Proyecto proyecto)
+        public async Task Update(Proyecto proyecto)
         {
-            _proyectoRepository.UpdateProyecto(proyecto);
+            await _proyectoRepository.UpdateProyecto(proyecto);
         }
 
-        public void Delete(int proyectoId)
+        public async Task Delete(int proyectoId)
         {
             var proyecto = _proyectoRepository.GetProyectoById(proyectoId);
 
             if (proyecto != null)
             {
-                _proyectoRepository.DeleteProyecto(proyectoId);
+               await _proyectoRepository.DeleteProyecto(proyectoId);
             }
         }
     }

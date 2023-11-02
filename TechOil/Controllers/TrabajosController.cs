@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TechOil.Models;
 using TechOil.Repositorys;
+using TechOil.Services;
 
 namespace TechOil.Controllers
 {
@@ -9,16 +11,17 @@ namespace TechOil.Controllers
     [Route("api/[controller]")]
     public class TrabajosController : ControllerBase
     {
-        private readonly ITrabajoRepository _trabajoRepository;
-        public TrabajosController(ITrabajoRepository trabajoRepository)
+        private readonly ITrabajosService _trabajoService;
+        public TrabajosController(ITrabajosService trabajoService)
         {
-            _trabajoRepository = trabajoRepository;
+            _trabajoService = trabajoService;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        //[Authorize]
+        public async Task<IActionResult> Get()
         {
-            var trabajos = _trabajoRepository.GetAllTrabajos();
+            var trabajos = await _trabajoService.GetAll();
             if (trabajos?.Count() == 0)
             {
                 return NotFound("No se encontraron Trabajos");
@@ -29,9 +32,10 @@ namespace TechOil.Controllers
             }
         }
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [Authorize]
+        public async Task<IActionResult> Get(int id)
         {
-            var trabajo = _trabajoRepository.GetTrabajoById(id);
+            var trabajo = await _trabajoService.GetById(id);
             if (trabajo == null)
             {
                 return NotFound("No se encontro el Trabajo solicitado");
@@ -42,31 +46,34 @@ namespace TechOil.Controllers
             }
         }
         [HttpPost]
-        public IActionResult Post([FromBody] Trabajo trabajo)
+        //[Authorize]
+        public async Task<IActionResult> Post([FromBody] Trabajo trabajo)
         {
-            _trabajoRepository.AddTrabajo(trabajo);
+            await _trabajoService.Add(trabajo);
             return CreatedAtAction(nameof(Get), new { id = trabajo.CodTrabajo }, trabajo);
         }
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Trabajo updateTrabajo)
+        [Authorize]
+        public async Task<IActionResult> Put(int id, [FromBody] Trabajo updateTrabajo)
         {
-            var trabajo = _trabajoRepository.GetTrabajoById(id);
+            var trabajo = await _trabajoService.GetById(id);
             if (trabajo == null)
             {
                 return NotFound();
             }
-            _trabajoRepository.UpdateTrabajo(trabajo);
+            await _trabajoService.Update(trabajo);
             return Ok(trabajo);
         }
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        //[Authorize]
+        public async Task<IActionResult> Delete(int id)
         {
-            var trabajo = _trabajoRepository.GetTrabajoById(id);
+            var trabajo = await _trabajoService.GetById(id);
             if (trabajo == null)
             {
                 return NotFound();
             }
-            _trabajoRepository.DeleteTrabajo(id);
+            await _trabajoService.Delete(id);
             return Ok("Trabajo eliminado satisfactoriamente");
         }
     }

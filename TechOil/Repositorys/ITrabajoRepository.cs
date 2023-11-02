@@ -4,10 +4,10 @@ namespace TechOil.Repositorys
 {
     public interface ITrabajoRepository
     {
-        IEnumerable<Trabajo> GetAllTrabajos();
-        public Trabajo GetTrabajoById(int id);
-        void AddTrabajo(Trabajo trabajo);
-        void UpdateTrabajo(Trabajo trabajo);
-        void DeleteTrabajo(int id);
+        Task<IEnumerable<Trabajo>> GetAllTrabajos();
+        Task<Trabajo> GetTrabajoById(int id);
+        Task AddTrabajo(Trabajo trabajo);
+        Task UpdateTrabajo(Trabajo trabajo);
+        Task DeleteTrabajo(int id);
     }
 }

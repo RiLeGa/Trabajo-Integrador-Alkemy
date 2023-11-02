@@ -1,0 +1,32 @@
+﻿@page
+@model TechOilF.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login page";
+    Layout = "_AuthLayout";
+}
+
+<div class="login" >
+    <form class="formLogin" style="z-index:1;background-color:gray;" method="post">
+        <h1 class="titulo display-4">Tech-Oil</h1>
+        <div class="form-floating mb-3" style="width: 80%;">
+            <input type="text" class="form-control" style="width:100%" id="nombre" name="nombre" placeholder="name@example.com">
+            <label for="nombre">Ingrese su nombre</label>
+        </div>
+        <div class="form-floating" style="width: 80%;">
+            <input type="password" class="form-control" style="width:100%" id="password" name="password" placeholder="Password">
+            <label for="password">Password</label>
+        </div>
+        <div class="iniciarSesion">
+            <button id="login" class="btn-success" style="border-radius:5px; padding:5px" type="submit">Iniciar Sesión</button>
+        </div>
+    </form>
+</div>
+<video class="videoLogin" muted autoplay loop>
+    <source src="~/videos/video-back-index.mp4" type="video/mp4" />
+</video>
+<div class="capa"></div>
+
+
+
+
+

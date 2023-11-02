@@ -4,10 +4,10 @@ namespace TechOil.Repositorys
 
 public interface IServicioRepository
 {
-    IEnumerable<Servicio> GetAllServicios();
-    public Servicio GetServicioById(int id);
-    void AddServicio(Servicio servicio);
-    void UpdateServicio(Servicio servicio);
-    void DeleteServicio(int id);
+    Task<IEnumerable<Servicio>> GetAllServicios();
+    Task<Servicio> GetServicioById(int id);
+    Task AddServicio(Servicio servicio);
+    Task UpdateServicio(Servicio servicio);
+    Task DeleteServicio(int id);
     }
 }

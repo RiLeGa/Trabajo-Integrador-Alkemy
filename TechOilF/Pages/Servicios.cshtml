@@ -1,0 +1,28 @@
+﻿@page
+@model TechOilF.Pages.ServiciosModel
+@{
+    ViewData["Title"] = "Servicios";
+    Layout = "_LayoutViewsLogued";
+}
+
+<h1 style="display:flex;flex-direction:row;justify-content:center;align-content:center;width:100%;">@ViewData["Title"]</h1>
+
+<div class="row">
+<div class="col-sm-6">
+    @foreach (var servicio in Model.Servicio)
+    {
+        if(servicio != null) 
+        {
+        <div class="card">
+            <div class="card-body">
+                <h2>@servicio.CodServicio</h2>
+                <br />
+                <h2>@servicio.Descr</h2>
+                <br />
+                <h2>@servicio.Estado</h2>
+            </div>
+        </div>
+        }
+    }
+</div>
+</div>

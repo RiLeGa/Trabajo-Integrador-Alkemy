@@ -13,15 +13,15 @@ namespace TechOil.Repositorys
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Usuario> GetAllUsuarios()
+        public async Task<IEnumerable<Usuario>> GetAllUsuarios()
         {
-            return _dbContext.Usuarios.ToList();
+            return await _dbContext.Usuarios.ToListAsync();
         }
-        public Usuario GetUsuarioById(int id)
+        public async Task<Usuario> GetUsuarioById(int id)
         {
-            return _dbContext.Usuarios.FirstOrDefault(p => p.CodUsuario == id);
+            return await _dbContext.Usuarios.FirstOrDefaultAsync(p => p.CodUsuario == id);
         }
-        public void AddUsuario(Usuario usuario)
+        public async Task AddUsuario(Usuario usuario)
         {
             string salt = BCrypt.Net.BCrypt.GenerateSalt(12);
 
@@ -30,25 +30,25 @@ namespace TechOil.Repositorys
             usuario.Password = hashedPassword;
 
             _dbContext.Usuarios.Add(usuario);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public void UpdateUsuario(Usuario usuario)
+        public async Task UpdateUsuario(Usuario usuario)
         {
             _dbContext.Usuarios.Update(usuario);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public void DeleteUsuario(int id)
+        public async Task DeleteUsuario(int id)
         {
-            var usuario = _dbContext.Usuarios.FirstOrDefault(p => p.CodUsuario == id);
+            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(p => p.CodUsuario == id);
             if (usuario != null)
             {
                 _dbContext.Usuarios.Remove(usuario);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
         }
-        public Usuario GetUserByUsername(string username)
+        public async Task<Usuario> GetUserByUsername(string username)
         {
-            return _dbContext.Usuarios.FirstOrDefault(u => u.Nombre == username);
+            return await _dbContext.Usuarios.FirstOrDefaultAsync(u => u.Nombre == username);
         }
     }
 }

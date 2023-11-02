@@ -3,48 +3,43 @@ using TechOil.Repositorys;
 
 namespace TechOil.Services
 {
-    public class UsuarioService : IUsuariosService
+    public class TrabajoService : ITrabajosService
     {
 
-        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly ITrabajoRepository _trabajoRepository;
 
-        public UsuarioService(IUsuarioRepository usuarioRepository)
+        public TrabajoService(ITrabajoRepository trabajoRepository)
         {
-            _usuarioRepository = usuarioRepository;
+            _trabajoRepository = trabajoRepository;
         }
 
-        public Usuario GetById(int UsuarioId)
+        public async Task<Trabajo> GetById(int trabajoId)
         {
-            return _usuarioRepository.GetUsuarioById(UsuarioId);
-        }
-        
-        public Usuario GetByUsername(string username)
-        {
-            return _usuarioRepository.GetUserByUsername(username);
+            return await _trabajoRepository.GetTrabajoById(trabajoId);
         }
 
-        public IEnumerable<Usuario> GetAll()
+        public async Task<IEnumerable<Trabajo>> GetAll()
         {
-            return _usuarioRepository.GetAllUsuarios();
+            return await _trabajoRepository.GetAllTrabajos();
         }
 
-        public void Add(Usuario Usuario)
+        public async Task Add(Trabajo trabajo)
         {
-            _usuarioRepository.AddUsuario(Usuario);
+            await _trabajoRepository.AddTrabajo(trabajo);
         }
 
-        public void Update(Usuario Usuario)
+        public async Task Update(Trabajo trabajo)
         {
-            _usuarioRepository.UpdateUsuario(Usuario);
+            await _trabajoRepository.UpdateTrabajo(trabajo);
         }
 
-        public void Delete(int UsuarioId)
+        public async Task Delete(int trabajoId)
         {
-            var Usuario = _usuarioRepository.GetUsuarioById(UsuarioId);
+            var trabajo = await _trabajoRepository.GetTrabajoById(trabajoId);
 
-            if (Usuario != null)
+            if (trabajo != null)
             {
-                _usuarioRepository.DeleteUsuario(UsuarioId);
+                await _trabajoRepository.DeleteTrabajo(trabajoId);
             }
         }
     }

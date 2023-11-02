@@ -13,38 +13,38 @@ namespace TechOil.Services
             _usuarioRepository = usuarioRepository;
         }
 
-        public Usuario GetById(int UsuarioId)
+        public async Task<Usuario> GetById(int UsuarioId)
         {
-            return _usuarioRepository.GetUsuarioById(UsuarioId);
+            return await _usuarioRepository.GetUsuarioById(UsuarioId);
         }
         
-        public Usuario GetByUsername(string username)
+        public async Task<Usuario> GetByUsername(string username)
         {
-            return _usuarioRepository.GetUserByUsername(username);
+            return await _usuarioRepository.GetUserByUsername(username);
         }
 
-        public IEnumerable<Usuario> GetAll()
+        public async Task<IEnumerable<Usuario>> GetAll()
         {
-            return _usuarioRepository.GetAllUsuarios();
+            return await _usuarioRepository.GetAllUsuarios();
         }
 
-        public void Add(Usuario Usuario)
+        public async Task Add(Usuario Usuario)
         {
-            _usuarioRepository.AddUsuario(Usuario);
+            await _usuarioRepository.AddUsuario(Usuario);
         }
 
-        public void Update(Usuario Usuario)
+        public async Task Update(Usuario Usuario)
         {
-            _usuarioRepository.UpdateUsuario(Usuario);
+            await _usuarioRepository.UpdateUsuario(Usuario);
         }
 
-        public void Delete(int UsuarioId)
+        public async Task Delete(int UsuarioId)
         {
-            var Usuario = _usuarioRepository.GetUsuarioById(UsuarioId);
+            var Usuario = await _usuarioRepository.GetUsuarioById(UsuarioId);
 
             if (Usuario != null)
             {
-                _usuarioRepository.DeleteUsuario(UsuarioId);
+                await _usuarioRepository.DeleteUsuario(UsuarioId);
             }
         }
     }

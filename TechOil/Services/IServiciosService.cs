@@ -2,12 +2,12 @@
 
 namespace TechOil.Services
 {
-    public interface IProyectosService
+    public interface IServiciosService
     {
-        IEnumerable<Proyecto> GetAll();
-        public Proyecto GetById(int id);
-        void Add(Proyecto proyecto);
-        void Update(Proyecto proyecto);
-        void Delete(int id);
+        Task<IEnumerable<Servicio>> GetAll();
+        Task<Servicio> GetById(int id);
+        Task Add(Servicio servicio);
+        Task Update(Servicio servicio);
+        Task Delete(int id);
     }
 }

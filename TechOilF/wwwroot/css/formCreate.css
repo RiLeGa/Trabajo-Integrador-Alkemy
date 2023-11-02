@@ -1,0 +1,21 @@
+﻿.formCreate {
+    border: 1px solid black;
+    width: 90vw;
+    height: max-content;
+    border-radius: 15px
+}
+@media (min-width: 768px) {
+    .formCreate {
+        border: 1px solid black;
+        height: max-content;
+        border-radius: 15px
+    }
+}
+@media (min-width: 1024px) {
+    .formCreate {
+        border: 1px solid black;
+        width: 45%;
+        height: max-content;
+        border-radius: 15px
+    }
+}

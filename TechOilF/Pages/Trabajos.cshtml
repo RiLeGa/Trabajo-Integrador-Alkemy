@@ -1,0 +1,76 @@
+﻿@page
+@model TechOilF.Pages.TrabajosModel
+@{
+    ViewData["Title"] = "Trabajos";
+    Layout = "_LayoutViewsLogued";
+}
+
+<section class="titAndSerch">
+    <div>
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" id="inputSearch" placeholder="Search" aria-label="Search">
+        <i class="glass bi bi-search"></i>
+    </form>
+</section>
+<section class="listsAndForms">
+    <div>
+        <form class="formCreate" method="post">
+            <h2 class="text-center">Crear Trabajo</h2>
+            <div class="mb-3">
+                <label for="CodServicio" class="form-label">Codigo de Servicio</label>
+                <input type="number" class="form-control" id="CodServicio" name="CodServicio" placeholder="Codigo de Servicio">
+            </div><div class="mb-3">
+                <label for="CodProyecto" class="form-label">Codigo de Proyecto</label>
+                <input type="number" class="form-control" id="CodProyecto" name="CodProyecto" placeholder="Codigo de Proyecto">
+            </div><div class="mb-3">
+                <label for="CantHoras" class="form-label">CantHoras</label>
+                <input type="number" class="form-control" id="CantHoras" name="CantHoras" placeholder="CantHoras">
+            </div>
+            <div class="btn w-100 align-items-center">
+                <button class="btn-success" style="border-radius:5px" asp-page-handler="CrearTrabajo" type="submit">Crear Trabajo</button>
+                <button class="btn-danger" style="border-radius:5px" type="reset">Cancelar</button>
+            </div>
+        </form>
+    </div>
+    <div class="dataList">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <table class="table table-bordered table-striped">
+                    <thead class="">
+                        <tr class="">
+                            <th class="text-center">-</th>
+                            <th class="text-center">Cod-Servicio</th>
+                            <th class="text-center">Cod-Proyecto</th>
+                            <th class="text-center">Cant-Horas</th>
+                            <th class="text-center">Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var trabajo in Model.Trabajo)
+                        {
+                            if (trabajo != null)
+                            {
+                                <tr class="listado">
+                                    <th class="text-center">@trabajo.CodTrabajo</th>
+                                    <th class="text-center">@trabajo.CodServicio</th>
+                                    <th class="text-center">@trabajo.CodProyecto</th>
+                                    <th class="text-center">@trabajo.CantHoras</th>
+                                    <th style="display:flex; flex-direction:row; justify-content:center; align-items:center">
+                                        <div class="buttons" style="display:flex; width:85%; flex-direction:row; justify-content:space-around; align-items:center">
+                                            <button type="submit" class="btn-info"><i class="bi bi-pencil-square"></i>Editar</button>
+                                            <form method="post">
+                                                <button type="submit" class="btn-danger" asp-page-handler="Delete" asp-route-id="@trabajo.CodTrabajo"><i class="bi bi-trash-fill"></i>Eliminar</button>
+                                            </form>
+                                        </div>
+                                    </th>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

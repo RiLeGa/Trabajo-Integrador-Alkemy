@@ -4,12 +4,11 @@ namespace TechOil.Services
 {
     public interface IUsuariosService
     {
-        IEnumerable<Usuario> GetAll();
-        public Usuario GetById(int id);
-        void Add(Usuario usuario);
-        void Update(Usuario usuario);
-        void Delete(int id);
-
-        public Usuario GetByUsername(string username);
+        Task<IEnumerable<Usuario>> GetAll();
+        Task<Usuario> GetById(int id);
+        Task<Usuario> GetByUsername(string username);
+        Task Add(Usuario usuario);
+        Task Update(Usuario usuario);
+        Task Delete(int id);
     }
 }

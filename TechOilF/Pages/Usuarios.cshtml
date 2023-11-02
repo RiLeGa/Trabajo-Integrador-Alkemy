@@ -1,0 +1,81 @@
+﻿@page
+@model TechOilF.Pages.UsuariosModel
+@{
+    ViewData["Title"] = "Usuarios";
+    Layout = "_LayoutViewsLogued";
+}
+
+<section class="titAndSerch">
+    <div>
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" id="inputSearch" placeholder="Search" aria-label="Search">
+        <i class="glass bi bi-search"></i>
+    </form>
+</section>
+<section class="listsAndForms">
+<div>
+    <form class="formCreate"  method="post">
+        <h2 class="text-center">Crear Usuario</h2>
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="nombre de ususario">
+        </div><div class="mb-3">
+            <label for="dni" class="form-label">Dni</label>
+                <input type="text" class="form-control" id="dni" name="dni" placeholder="Ingrese su Dni">
+        </div><div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Ingrese una contraseña">
+        </div>
+        <div class="btn w-100 align-items-center">
+                <button class="btn-success" style="border-radius:5px" asp-page-handler="CrearUsuario" type="submit">Crear Usuario</button>
+                <button class="btn-danger" style="border-radius:5px" type="reset">Cancelar</button>
+        </div>
+    </form>
+</div>
+    <div class="dataList">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <table class="table table-bordered table-striped">
+                <thead class="">
+                    <tr class="">
+                        <th class="text-center">-</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">DNI</th>
+                        <th class="text-center">Accion</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    @foreach (var usuario in Model.Usuario)
+                    {
+                        if (usuario != null)
+                        {
+                        <tr class="listado">
+                                <th class="text-center">
+                                    @usuario.CodUsuario
+                                </th>
+                                <th class="text-center">
+                                    @usuario.Nombre
+                                </th>
+                                <th class="text-center">
+                                    @usuario.Dni
+                                </th>
+                                <th style="display:flex; flex-direction:row; justify-content:center; align-items:center">
+                                    <div class="buttons" style="display:flex; width:60%; flex-direction:row; justify-content:space-around; align-items:center">
+                                        <button type="submit" class="btn-info" ><i class="bi bi-pencil-square"></i>Editar</button>
+                                        <form method="post">
+                                                <button type="submit" class="btn-danger" asp-page-handler="Delete" asp-route-id="@usuario.CodUsuario"><i class="bi bi-trash-fill"></i>Eliminar</button>
+                                        </form>
+                                    </div>
+                                </th>
+                            </tr>
+                        }
+                        
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</section>

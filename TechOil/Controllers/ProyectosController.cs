@@ -24,10 +24,10 @@ namespace TechOil.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        public IActionResult Get()
+        //[Authorize]
+        public async Task<IActionResult> Get()
         {
-            var proyectos = _proyectoService.GetAll();
+            var proyectos = await _proyectoService.GetAll();
             if (proyectos?.Count() == 0)
             {
                 return NotFound("No se encontraron Proyectos");
@@ -41,9 +41,9 @@ namespace TechOil.Controllers
         }
         [HttpGet("{id}")]
         [Authorize]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var proyecto = _proyectoService.GetById(id);
+            var proyecto = await _proyectoService.GetById(id);
             if (proyecto == null)
             {
                 return NotFound("No se encontro el proyecto solicitado");
@@ -55,16 +55,16 @@ namespace TechOil.Controllers
         }
         [HttpPost]
         [Authorize]
-        public IActionResult Post([FromBody]Proyecto proyecto) 
+        public async Task<IActionResult> Post([FromBody]Proyecto proyecto) 
         {
-            _proyectoService.Add(proyecto);
+            await _proyectoService.Add(proyecto);
             return CreatedAtAction(nameof(Get), new {id = proyecto.CodProyecto}, proyecto);
         }
         [HttpPut("{id}")]
         [Authorize]
-        public IActionResult Put(int id, [FromBody]Proyecto updateProyecto) 
+        public async Task<IActionResult> Put(int id, [FromBody]Proyecto updateProyecto) 
         {
-            var proyecto = _proyectoService.GetById(id);
+            var proyecto = await _proyectoService.GetById(id);
             if (proyecto == null)
             {
                 return NotFound();
@@ -72,19 +72,19 @@ namespace TechOil.Controllers
             proyecto.Nombre = updateProyecto.Nombre;
             proyecto.Direccion = updateProyecto.Direccion;
             proyecto.Estado = updateProyecto.Estado;
-            _proyectoService.Update(proyecto);
+            await _proyectoService.Update(proyecto);
             return Ok(proyecto);
         }
         [HttpDelete("{id}")]
         [Authorize]
-        public IActionResult Delete(int id) 
+        public async Task<IActionResult> Delete(int id) 
         {
-            var proyecto = _proyectoService.GetById(id);
+            var proyecto = await _proyectoService.GetById(id);
             if (proyecto == null)
             {
                 return NotFound();
             }
-            _proyectoService.Delete(id);
+            await _proyectoService.Delete(id);
             return Ok("Proyecto eliminado satisfactoriamente");
         }
 

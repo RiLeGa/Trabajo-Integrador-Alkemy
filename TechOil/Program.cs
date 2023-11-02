@@ -46,14 +46,27 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnC
 builder.Services.AddDbContext<TechOilDbContext>();
 
 builder.Services.AddScoped<IServicioRepository, ServicioRepository>();
+builder.Services.AddScoped<IServiciosService, ServicioService>();
 
 builder.Services.AddScoped<IProyectoRepository, ProyectoRepository>();
 builder.Services.AddScoped<IProyectosService, ProyectoService>();
 
 builder.Services.AddScoped<ITrabajoRepository, TrabajoRepository>();
+builder.Services.AddScoped<ITrabajosService, TrabajoService>();
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IUsuariosService, UsuarioService>();
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("newPolicy", app =>
+    {
+        app.WithOrigins("http://localhost:5045");
+        app.AllowAnyHeader();
+        app.AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -63,6 +76,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("newPolicy");
+
 app.UseAuthentication();
 
 app.UseAuthorization();
