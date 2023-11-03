@@ -61,14 +61,16 @@
 
 @media (min-width: 768px) {
     .login {
+        background-image: url('../images/tech-oil-logo.jpg');
+        background-position-x: center;
+        background-position-y: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        min-height: 50vh;
+        min-height: 105vh;
         position: relative;
         width: 100%;
-        margin-top: 23vh
     }
 
     .formLogin {
@@ -117,6 +119,7 @@
 
     .login {
         display: flex;
+        background:none;
         flex-direction: column;
         justify-content: center;
         align-items: center;

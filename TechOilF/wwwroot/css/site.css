@@ -20,6 +20,9 @@ footer {
     align-items: center;
     position:relative
 }
+#inputSearch {
+    width: 235px;
+}
 .glass{
     font-size:13px;
     position:absolute;
@@ -37,7 +40,6 @@ main {
 }
 .mainModified {
     width: 90vw;
-    margin-left: 5vw;
     margin-top: 25px;
     margin-bottom: 50px;
 }
@@ -45,17 +47,34 @@ main {
     display: flex;
     flex-direction: column
 }
-.indexView{
-    min-height:100vh;
-    position:relative;
+.indexView {
+    background-image: url('../images/tech-oil-logo.jpg');
+    background-position-x: center;
+    background-position-y: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 105vh;
+    position: relative;
+    width: 100%;
 }
-.videoIndex{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    object-fit:cover
+.videoIndex {
+    display: none
+}
+#messageIndex {
+    position: relative;
+    z-index: 2;
+    color: white;
+    background: black;
+    opacity: 0.5;
+    height: 100vh;
+}
+
+p#pBienvenida {
+    width: 90vw;
+    font-size: 25px;
+    margin-top: 150px;
 }
 .capa {
     position: absolute;
@@ -121,18 +140,22 @@ main {
         flex-direction: column
     }
 
-    .indexView {
-        min-height: 100vh;
+    .videoIndex {
+        display:none
+    }
+    #messageIndex {
         position: relative;
+        z-index: 2;
+        color: white;
+        background: black;
+        opacity: 0.5;
+        height: 100vh;
     }
 
-    .videoIndex {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover
+    p#pBienvenida {
+        width: 90vw;
+        font-size: 25px;
+        margin-top: 150px;
     }
 
     .capa {
@@ -209,17 +232,20 @@ main {
     }
 
     .indexView {
+        background:none;
         min-height: 100vh;
         position: relative;
     }
 
     .videoIndex {
+        display:block;
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover
+        object-fit: cover;
+        z-index:1
     }
 
     .capa {
@@ -232,7 +258,20 @@ main {
         opacity: 0.5;
         mix-blend-mode: overlay;
     }
-    .dataList{
-        width:75%
+    #messageIndex {
+        position: relative;
+        z-index: 2;
+        color: white;
+        background: black;
+        opacity: 0.5;
+        height: 100vh;
+    }
+    p#pBienvenida {
+        width: 90vw;
+        font-size:25px;
+        margin-top:150px;
+    }
+    .dataList {
+        width: 75%
     }
 }

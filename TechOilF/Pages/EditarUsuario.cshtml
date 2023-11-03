@@ -1,0 +1,27 @@
+﻿@page
+@model TechOilF.Pages.FormEditUsModel
+@{
+    ViewData["Title"] = "Usuarios";
+    Layout = "_LayoutViewsLogued";
+}
+
+
+<div>
+    <form class="formEdit" method="post">
+        <h2 class="text-center">Editar Usuario</h2>
+        <div class="mb-3">
+            <input type="hidden" class="form-control" id="codUsuario" name="codUsuario" placeholder="" value="@Model.Usuario.CodUsuario">
+        </div><div class="mb-3">
+            <label for="codUsuario" class="form-label">Codigo de usuario</label>
+            <input type="number" class="form-control" placeholder="" value="@Model.Usuario.CodUsuario" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="nombreAEditar" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombreAEditar" name="nombreAEditar" placeholder="" value="@Model.Usuario.Nombre">
+        </div>
+        <div class="btn w-100 align-items-center">
+            <button class="btn-success" style="border-radius:5px" asp-page-handler="EditarUsuario" type="submit">Guardar</button>
+            <button class="btn-danger" style="border-radius:5px" type="reset">Cancelar</button>
+        </div>
+    </form>
+</div>

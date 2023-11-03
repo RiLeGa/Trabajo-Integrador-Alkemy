@@ -1,0 +1,35 @@
+﻿@page
+@model TechOilF.Pages.EditarTrabajoModel
+@{
+}
+@{
+    ViewData["Title"] = "Trabajos";
+    Layout = "_LayoutViewsLogued";
+}
+
+
+<div>
+    <form class="formEdit" method="post">
+        <h2 class="text-center">Editar Usuario</h2>
+        <div class="mb-3">
+            <input type="hidden" class="form-control" id="codTrabajo" name="codTrabajo" placeholder="" value="@Model.Trabajo.CodTrabajo">
+        </div><div class="mb-3">
+            <label for="codTrabajo" class="form-label">Codigo de Trabajo</label>
+            <input type="number" class="form-control" placeholder="" value="@Model.Trabajo.CodTrabajo" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="codServicio" class="form-label">Codigo de Servicio</label>
+            <input type="number" class="form-control" id="codServicio" name="codServicioAEditar" value="@Model.Trabajo.CodServicio">
+        </div><div class="mb-3">
+            <label for="codProyecto" class="form-label">Codigo de Proyecto</label>
+            <input type="number" class="form-control" id="codProyecto" name="codProyectoAEditar" value="@Model.Trabajo.CodProyecto">
+        </div><div class="mb-3">
+            <label for="cantHoras" class="form-label">CantHoras</label>
+            <input type="number" class="form-control" id="cantHoras" name="cantHorasAEditar" value="@Model.Trabajo.CantHoras">
+        </div>
+        <div class="btn w-100 align-items-center">
+            <button class="btn-success" style="border-radius:5px" asp-page-handler="EditarTrabajo" type="submit">Guardar</button>
+            <button class="btn-danger" style="border-radius:5px" type="reset">Cancelar</button>
+        </div>
+    </form>
+</div>

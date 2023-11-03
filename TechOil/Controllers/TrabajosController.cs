@@ -32,7 +32,7 @@ namespace TechOil.Controllers
             }
         }
         [HttpGet("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Get(int id)
         {
             var trabajo = await _trabajoService.GetById(id);
@@ -53,7 +53,7 @@ namespace TechOil.Controllers
             return CreatedAtAction(nameof(Get), new { id = trabajo.CodTrabajo }, trabajo);
         }
         [HttpPut("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Put(int id, [FromBody] Trabajo updateTrabajo)
         {
             var trabajo = await _trabajoService.GetById(id);
@@ -61,6 +61,9 @@ namespace TechOil.Controllers
             {
                 return NotFound();
             }
+            trabajo.CodProyecto = updateTrabajo.CodProyecto;
+            trabajo.CodServicio = updateTrabajo.CodServicio;
+            trabajo.CantHoras = updateTrabajo.CantHoras;
             await _trabajoService.Update(trabajo);
             return Ok(trabajo);
         }

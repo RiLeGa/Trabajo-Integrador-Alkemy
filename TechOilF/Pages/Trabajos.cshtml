@@ -6,13 +6,9 @@
 }
 
 <section class="titAndSerch">
-    <div>
-        <h1>@ViewData["Title"]</h1>
-    </div>
-    <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" id="inputSearch" placeholder="Search" aria-label="Search">
-        <i class="glass bi bi-search"></i>
-    </form>
+    <h1>@ViewData["Title"]</h1>
+    <input class="form-control me-2" type="text" id="inputSearch" placeholder="Search" aria-label="Search">
+    <i class="glass bi bi-search"></i>
 </section>
 <section class="listsAndForms">
     <div>
@@ -59,9 +55,11 @@
                                     <th class="text-center">@trabajo.CantHoras</th>
                                     <th style="display:flex; flex-direction:row; justify-content:center; align-items:center">
                                         <div class="buttons" style="display:flex; width:85%; flex-direction:row; justify-content:space-around; align-items:center">
-                                            <button type="submit" class="btn-info"><i class="bi bi-pencil-square"></i>Editar</button>
+                                            <a href="/EditarTrabajo?id=@trabajo.CodTrabajo" class="btn btn-info">
+                                                <i class="bi bi-pencil-square"></i> Editar
+                                            </a>
                                             <form method="post">
-                                                <button type="submit" class="btn-danger" asp-page-handler="Delete" asp-route-id="@trabajo.CodTrabajo"><i class="bi bi-trash-fill"></i>Eliminar</button>
+                                                <button type="submit" class="btn btn-danger" asp-page-handler="Delete" asp-route-id="@trabajo.CodTrabajo"><i class="bi bi-trash-fill"></i>Eliminar</button>
                                             </form>
                                         </div>
                                     </th>

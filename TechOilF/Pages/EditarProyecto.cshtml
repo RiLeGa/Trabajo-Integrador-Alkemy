@@ -1,0 +1,37 @@
+﻿@page
+@model TechOilF.Pages.EditarProyectoModel
+@{
+    ViewData["Title"] = "Proyectos";
+    Layout = "_LayoutViewsLogued";
+}
+
+<div class=" formCreate">
+    <form method="post">
+        <h2 class="text-center">Editar Proyecto</h2>
+        <div class="mb-3">
+            <input type="hidden" class="form-control" id="codProyecto" name="codProyecto" placeholder="" value="@Model.Proyecto.CodProyecto">
+        </div><div class="mb-3">
+            <label for="codProyecto" class="form-label">Codigo de Proyecto</label>
+            <input type="number" class="form-control" placeholder="" value="@Model.Proyecto.CodProyecto" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="nombreAEditar" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombreAEditar" name="nombreAEditar" value="@Model.Proyecto.Nombre">
+        </div>
+        <div class="mb-3">
+            <label for="direccionAEditar" class="form-label">Direccion</label>
+            <input type="text" class="form-control" id="direccionAEditar" name="direccionAEditar" value="@Model.Proyecto.Direccion">
+        </div>
+        <div class="mb-3">
+            <label for="estadoAEditar" class="form-label">Estado</label>
+            <select name="estadoAEditar" id="estadoAEditar">
+                <option value="false">Pendiente</option>
+                <option value="true">En curso</option>
+            </select>
+        </div>
+        <div class="btn w-100 align-items-center justify-content-between">
+            <button class="btn-success" style="border-radius:5px" asp-page-handler="EditarProyecto" type="submit">Editar Proyecto</button>
+            <button class="btn-danger" style="border-radius:5px" type="reset">Cancelar</button>
+        </div>
+    </form>
+</div>

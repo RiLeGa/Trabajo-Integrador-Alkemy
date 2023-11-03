@@ -1,0 +1,33 @@
+﻿@page
+@model TechOilF.Pages.EditarServicioModel
+@{
+    ViewData["Title"] = "Servicios";
+    Layout = "_LayoutViewsLogued";
+}
+
+<div class=" formCreate">
+    <form method="post">
+        <h2 class="text-center">Editar Servicio</h2>
+        <div class="mb-3">
+            <input type="hidden" class="form-control" id="codServicio" name="codServicio" placeholder="" value="@Model.Servicio.CodServicio">
+        </div><div class="mb-3">
+            <label for="codServicio" class="form-label">Codigo de Servicio</label>
+            <input type="number" class="form-control" placeholder="" value="@Model.Servicio.CodServicio" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="descripcionAEditar" class="form-label">Descripcion</label>
+            <input type="text" class="form-control" id="descripcionAEditar" name="descripcionAEditar" value="@Model.Servicio.Descr">
+        </div>
+        <div class="mb-3">
+            <label for="estadoAEditar" class="form-label">Estado</label>
+            <select name="estadoAEditar" id="estadoAEditar">
+                <option value="false">Pendiente</option>
+                <option value="true">En curso</option>
+            </select>
+        </div>
+        <div class="btn w-100 align-items-center">
+            <button class="btn-success" style="border-radius:5px" asp-page-handler="EditarServicio" type="submit">Guardar</button>
+            <button class="btn-danger" style="border-radius:5px" type="reset">Cancelar</button>
+        </div>
+    </form>
+</div>

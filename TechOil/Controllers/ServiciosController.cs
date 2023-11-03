@@ -32,7 +32,7 @@ namespace TechOil.Controllers
             }
         }
         [HttpGet("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Get(int id)
         {
             var servicio = await _serviciosService.GetById(id);
@@ -46,14 +46,14 @@ namespace TechOil.Controllers
             }
         }
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Post([FromBody] Servicio servicio)
         {
             await _serviciosService.Add(servicio);
             return CreatedAtAction(nameof(Get), new { id = servicio.CodServicio }, servicio);
         }
         [HttpPut("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Put(int id, [FromBody] Servicio updateServicio)
         {
             var servicio = await _serviciosService.GetById(id);
@@ -68,7 +68,7 @@ namespace TechOil.Controllers
             return Ok(servicio);
         }
         [HttpDelete("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var servicio = await _serviciosService.GetById(id);

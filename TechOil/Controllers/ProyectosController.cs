@@ -34,13 +34,13 @@ namespace TechOil.Controllers
             }
             else
             {
-                //return Ok(proyectos);
-                var proyectosDTOs = _mapper.Map<List<ProyectosDto>>(proyectos);
-                return Ok(proyectosDTOs); 
+                return Ok(proyectos);
+                //var proyectosDTOs = _mapper.Map<List<ProyectosDto>>(proyectos);
+                //return Ok(proyectosDTOs); 
             }
         }
         [HttpGet("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Get(int id)
         {
             var proyecto = await _proyectoService.GetById(id);
@@ -54,14 +54,14 @@ namespace TechOil.Controllers
             }
         }
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Post([FromBody]Proyecto proyecto) 
         {
             await _proyectoService.Add(proyecto);
             return CreatedAtAction(nameof(Get), new {id = proyecto.CodProyecto}, proyecto);
         }
         [HttpPut("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Put(int id, [FromBody]Proyecto updateProyecto) 
         {
             var proyecto = await _proyectoService.GetById(id);
@@ -76,7 +76,7 @@ namespace TechOil.Controllers
             return Ok(proyecto);
         }
         [HttpDelete("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Delete(int id) 
         {
             var proyecto = await _proyectoService.GetById(id);

@@ -12,7 +12,7 @@ using TechOil.DataAccess;
 namespace TechOil.Migrations
 {
     [DbContext(typeof(TechOilDbContext))]
-    [Migration("20231021033154_InitialCreate")]
+    [Migration("20231103090113_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -37,8 +37,8 @@ namespace TechOil.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Estado")
-                        .HasColumnType("int");
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -80,13 +80,13 @@ namespace TechOil.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodTrabajo"));
 
+                    b.Property<int>("CantHoras")
+                        .HasColumnType("int");
+
                     b.Property<int>("CodProyecto")
                         .HasColumnType("int");
 
                     b.Property<int>("CodServicio")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ContHoras")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Costo")

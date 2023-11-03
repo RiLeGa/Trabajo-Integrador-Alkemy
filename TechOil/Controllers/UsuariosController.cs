@@ -37,7 +37,7 @@ namespace TechOil.Controllers
             }
         }
         [HttpGet("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Get(int id)
         {
             var usuario = await _usuarioService.GetById(id);
@@ -51,15 +51,15 @@ namespace TechOil.Controllers
             }
         }
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Post([FromBody] Usuario usuario)
         {
             await _usuarioService.Add(usuario);
             return CreatedAtAction(nameof(Get), new { id = usuario.CodUsuario }, usuario);
         }
         [HttpPut("{id}")]
-        [Authorize]
-        public async Task<IActionResult> Put(int id, [FromBody] Usuario updateUsuario)
+        //[Authorize]
+        public async Task<IActionResult> Put(int id, [FromBody] UsuariosDto updateUsuario)
         {
             var usuario = await _usuarioService.GetById(id);
             if (usuario == null)
@@ -67,10 +67,8 @@ namespace TechOil.Controllers
                 return NotFound();
             }
             usuario.Nombre= updateUsuario.Nombre;
-            usuario.Dni= updateUsuario.Dni;
-            usuario.Tipo= updateUsuario.Tipo;
             await _usuarioService.Update(usuario);
-            return Ok(usuario);
+            return Ok("Ususario modificado");
         }
         [HttpDelete("{id}")]
         //[Authorize]

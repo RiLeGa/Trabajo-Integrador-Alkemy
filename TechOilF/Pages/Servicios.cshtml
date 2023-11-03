@@ -5,24 +5,75 @@
     Layout = "_LayoutViewsLogued";
 }
 
-<h1 style="display:flex;flex-direction:row;justify-content:center;align-content:center;width:100%;">@ViewData["Title"]</h1>
-
-<div class="row">
-<div class="col-sm-6">
-    @foreach (var servicio in Model.Servicio)
-    {
-        if(servicio != null) 
-        {
-        <div class="card">
-            <div class="card-body">
-                <h2>@servicio.CodServicio</h2>
-                <br />
-                <h2>@servicio.Descr</h2>
-                <br />
-                <h2>@servicio.Estado</h2>
+<section class="titAndSerch">
+    <h1>@ViewData["Title"]</h1>
+    <input class="form-control me-2" type="text" id="inputSearch" placeholder="Search" aria-label="Search">
+    <i class="glass bi bi-search"></i>
+</section>
+<section class="listsAndForms">
+    <div class=" formCreate">
+        <form method="post">
+            <h2 class="text-center">Crear Servicio</h2>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripcion</label>
+                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese una descripcion">
+            </div>
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <select name="estado" id="estado">
+                    <option value="false">Pendiente</option>
+                    <option value="true">En curso</option>
+                </select>
+            </div>
+            <div class="btn w-100 align-items-center justify-content-between">
+                <button class="btn-success" style="border-radius:5px" asp-page-handler="CrearServicios" type="submit">Crear Servicio</button>
+                <button class="btn-danger" style="border-radius:5px" type="reset">Cancelar</button>
+            </div>
+        </form>
+    </div>
+    <div class="dataList">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <table class="table table-bordered table-striped">
+                    <thead class="">
+                        <tr class="">
+                            <th class="text-center">-</th>
+                            <th class="text-center">Descr</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var servicio in Model.Servicio)
+                        {
+                            if (servicio != null)
+                            {
+                                <tr class="listado">
+                                    <th class="text-center">
+                                        @servicio.CodServicio
+                                    </th>
+                                    <th class="text-center">
+                                        @servicio.Descr
+                                    </th>
+                                    <th class="text-center">
+                                        @servicio.Estado
+                                    </th>
+                                    <th style="display:flex; flex-direction:row; justify-content:center; align-items:center">
+                                        <div class="buttons" style="display:flex; width:85%; flex-direction:row; justify-content:space-around; align-items:center">
+                                            <a href="/EditarServicio?id=@servicio.CodServicio" class="btn btn-info">
+                                                <i class="bi bi-pencil-square"></i> Editar
+                                            </a>
+                                            <form method="post">
+                                                <button type="submit" class="btn btn-danger" asp-page-handler="Delete" asp-route-id="@servicio.CodServicio"><i class="bi bi-trash-fill"></i>Eliminar</button>
+                                            </form>
+                                        </div>
+                                    </th>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
-        }
-    }
-</div>
-</div>
+    </div>
+</section>
